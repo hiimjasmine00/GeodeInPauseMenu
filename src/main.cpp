@@ -55,7 +55,7 @@ class $modify(GIPMPauseLayer, PauseLayer) {
     void customSetup() override {
         PauseLayer::customSetup();
 
-        if (geodeButtonAddress == 0) return;
+        if (geodeButtonAddress == 0 || !Mod::get()->getSettingValue<bool>("game-pause-menu")) return;
 
         if (auto rightButtonMenu = getChildByID("right-button-menu")) {
             auto geodeButtonSprite = CircleButtonSprite::createWithSpriteFrameName("geode.loader/geode-logo-outline-gold.png",
@@ -78,7 +78,7 @@ class $modify(GIPMEditorPauseLayer, EditorPauseLayer) {
     bool init(LevelEditorLayer* lel) {
         if (!EditorPauseLayer::init(lel)) return false;
 
-        if (geodeButtonAddress == 0) return true;
+        if (geodeButtonAddress == 0 || !Mod::get()->getSettingValue<bool>("editor-pause-menu")) return true;
 
         if (auto guidelinesMenu = getChildByID("guidelines-menu")) {
             auto geodeButton = CCMenuItemSpriteExtra::create(CircleButtonSprite::createWithSpriteFrameName("geode.loader/geode-logo-outline-gold.png",

@@ -22,6 +22,20 @@
         "source": "https://github.com/hiimjustin000/GeodeInPauseMenu",
         "homepage": "https://www.hiimjustin000.com"
     },
+    "settings": {
+        "game-pause-menu": {
+            "name": "Game Pause Menu",
+            "description": "Enables the Geode button in the pause menu.",
+            "type": "bool",
+            "default": true
+        },
+        "editor-pause-menu": {
+            "name": "Editor Pause Menu",
+            "description": "Enables the Geode button in the editor pause menu.",
+            "type": "bool",
+            "default": true
+        }
+    },
     "tags": [
         "enhancement",
         "interface",
