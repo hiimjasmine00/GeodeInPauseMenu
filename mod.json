@@ -1,0 +1,32 @@
+{
+    "geode": "4.0.1",
+    "gd": {
+        "android": "2.2074",
+        "win": "2.2074",
+        "mac": "2.2074"
+    },
+    "version": "v1.0.0",
+    "id": "hiimjustin000.geode_in_pause_menu",
+    "name": "Geode In Pause Menu",
+    "developer": "hiimjustin000",
+    "description": "A mod that adds a Geode button to the pause menu.",
+    "dependencies": [
+        {
+            "id": "geode.node-ids",
+            "version": ">=v1.17.0",
+            "importance": "required"
+        }
+    ],
+    "links": {
+        "community": "https://discord.gg/QVKmbvBXA7",
+        "source": "https://github.com/hiimjustin000/GeodeInPauseMenu",
+        "homepage": "https://www.hiimjustin000.com"
+    },
+    "tags": [
+        "enhancement",
+        "interface",
+        "gameplay",
+        "offline",
+        "utility"
+    ]
+}
