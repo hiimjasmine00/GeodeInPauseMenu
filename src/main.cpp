@@ -1,16 +1,15 @@
 #include "ModsLayerWrapper.hpp"
+#include <Geode/ui/GeodeUI.hpp>
 
 using namespace geode::prelude;
 
-uintptr_t geodeButtonAddress;
-
-void openGeodeMenu(CCObject* target, CCObject* sender) {
+void openGeodeMenu() {
     auto director = CCDirector::get();
     auto runningScene = CCScene::get();
     runningScene->retain();
     auto dontCallWillSwitch = director->getDontCallWillSwitch();
     director->setDontCallWillSwitch(true);
-    reinterpret_cast<void(*)(CCObject*, CCObject*)>(geodeButtonAddress)(target, sender);
+    openModsList();
     CCLayer* modsLayer = nullptr;
     if (auto transitionScene = typeinfo_cast<CCTransitionScene*>(director->m_pNextScene)) {
         if (auto inScene = *reinterpret_cast<CCScene**>(reinterpret_cast<uintptr_t>(transitionScene) + sizeof(CCScene))) {
@@ -36,26 +35,12 @@ void openGeodeMenu(CCObject* target, CCObject* sender) {
     });
 }
 
-#include <Geode/modify/MenuLayer.hpp>
-class $modify(GIPMMenuLayer, MenuLayer) {
-    bool init() override {
-        if (!MenuLayer::init()) return false;
-
-        if (auto bottomMenu = getChildByID("bottom-menu")) {
-            if (auto geodeButton = static_cast<CCMenuItemSpriteExtra*>(bottomMenu->getChildByID("geode.loader/geode-button")))
-                geodeButtonAddress = addresser::getNonVirtual(geodeButton->m_pfnSelector);
-        }
-
-        return true;
-    }
-};
-
 #include <Geode/modify/PauseLayer.hpp>
 class $modify(GIPMPauseLayer, PauseLayer) {
     void customSetup() override {
         PauseLayer::customSetup();
 
-        if (geodeButtonAddress == 0 || !Mod::get()->getSettingValue<bool>("game-pause-menu")) return;
+        if (!Mod::get()->getSettingValue<bool>("game-pause-menu")) return;
 
         if (auto rightButtonMenu = getChildByID("right-button-menu")) {
             auto geodeButtonSprite = CircleButtonSprite::createWithSpriteFrameName("geode.loader/geode-logo-outline-gold.png",
@@ -68,8 +53,8 @@ class $modify(GIPMPauseLayer, PauseLayer) {
         }
     }
 
-    void onGeode(CCObject* sender) {
-        openGeodeMenu(this, sender);
+    void onGeode(CCObject*) {
+        openGeodeMenu();
     }
 };
 
@@ -78,7 +63,7 @@ class $modify(GIPMEditorPauseLayer, EditorPauseLayer) {
     bool init(LevelEditorLayer* lel) {
         if (!EditorPauseLayer::init(lel)) return false;
 
-        if (geodeButtonAddress == 0 || !Mod::get()->getSettingValue<bool>("editor-pause-menu")) return true;
+        if (!Mod::get()->getSettingValue<bool>("editor-pause-menu")) return true;
 
         if (auto guidelinesMenu = getChildByID("guidelines-menu")) {
             auto geodeButton = CCMenuItemSpriteExtra::create(CircleButtonSprite::createWithSpriteFrameName("geode.loader/geode-logo-outline-gold.png",
@@ -91,7 +76,7 @@ class $modify(GIPMEditorPauseLayer, EditorPauseLayer) {
         return true;
     }
 
-    void onGeode(CCObject* sender) {
-        openGeodeMenu(this, sender);
+    void onGeode(CCObject*) {
+        openGeodeMenu();
     }
 };
