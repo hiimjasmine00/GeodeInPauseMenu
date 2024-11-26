@@ -15,6 +15,8 @@ ModsLayerWrapper* ModsLayerWrapper::create(CCLayer* modsLayer) {
 bool ModsLayerWrapper::init(CCLayer* modsLayer) {
     if (!FLAlertLayer::init(150)) return false;
 
+    setID("ModsLayerWrapper");
+
     m_noElasticity = true;
 
     if (m_mainLayer) m_mainLayer->removeFromParent();
