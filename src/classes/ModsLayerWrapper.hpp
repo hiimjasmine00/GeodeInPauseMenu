@@ -1,3 +1,5 @@
+#include <Geode/binding/FLAlertLayer.hpp>
+
 class ModsLayerWrapper : public FLAlertLayer {
 protected:
     bool init(CCLayer*);
@@ -9,7 +11,7 @@ public:
         onClose(nullptr);
     }
     void registerWithTouchDispatcher() override {
-        cocos2d::CCTouchDispatcher::get()->addTargetedDelegate(this, -500, true);
+        cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -500, true);
     }
     void keyDown(cocos2d::enumKeyCodes key) override {
         m_mainLayer->keyDown(key);
