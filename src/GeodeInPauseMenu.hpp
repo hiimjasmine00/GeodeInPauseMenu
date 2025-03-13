@@ -1,4 +1,6 @@
-class GeodeInPauseMenu {
+#include <cocos2d.h>
+
+class GeodeInPauseMenu : public cocos2d::CCObject {
 public:
-    static void openGeodeMenu();
+    void openGeodeMenu(CCObject*);
 };

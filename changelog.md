@@ -1,4 +1,7 @@
 # Geode In Pause Menu Changelog
+## v1.0.2 (2025-03-13)
+- Fixed the Geode button scale on the editor pause menu (Reported by [Erymanthus](user:1941705))
+
 ## v1.0.1 (2025-03-07)
 - Fixed the Geode logo scale on the game pause menu button (Reported by [Hbg1010](user:9115450))
 

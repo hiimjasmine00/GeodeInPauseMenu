@@ -10,31 +10,31 @@ class $modify(GIPMPauseLayer, PauseLayer) {
             return log::error("Failed to get PauseLayer::customSetup hook: {}", err), err;
         }).unwrapOr(nullptr);
         if (!hook) return;
+
+        auto mod = Mod::get();
         hook->setAutoEnable(Mod::get()->getSettingValue<bool>("game-pause-menu"));
 
-        listenForSettingChanges<bool>("game-pause-menu", [hook](bool value) {
-            (void)(value ? hook->enable() : hook->disable()).mapErr([value](const std::string& err) {
-                return log::error("Failed to {} PauseLayer::customSetup hook: {}", value ? "enable" : "disable", err), err;
-            });
-        });
+        listenForSettingChangesV3<bool>("game-pause-menu", [hook](bool value) {
+            (void)(value ? hook->enable().mapErr([value](const std::string& err) {
+                return log::error("Failed to enable PauseLayer::customSetup hook: {}", err), err;
+            }) : hook->disable().mapErr([value](const std::string& err) {
+                return log::error("Failed to disable PauseLayer::customSetup hook: {}", err), err;
+            }));
+        }, mod);
     }
 
     void customSetup() override {
         PauseLayer::customSetup();
 
-        if (auto rightButtonMenu = getChildByID("right-button-menu")) {
-            auto geodeButtonSprite = CircleButtonSprite::createWithSpriteFrameName("geode.loader/geode-logo-outline-gold.png",
-                1.0f, CircleBaseColor::Green, CircleBaseSize::MediumAlt);
-            geodeButtonSprite->setScale(0.6f);
-            geodeButtonSprite->getTopNode()->setScale(1.0f);
-            auto geodeButton = CCMenuItemSpriteExtra::create(geodeButtonSprite, this, menu_selector(GIPMPauseLayer::onGeode));
-            geodeButton->setID("geode-button"_spr);
-            rightButtonMenu->addChild(geodeButton);
-            rightButtonMenu->updateLayout();
-        }
-    }
+        auto rightButtonMenu = getChildByID("right-button-menu");
+        if (!rightButtonMenu) return;
 
-    void onGeode(CCObject*) {
-        GeodeInPauseMenu::openGeodeMenu();
+        auto geodeButtonSprite = CircleButtonSprite::createWithSpriteFrameName("geode.loader/geode-logo-outline-gold.png",
+            0.95f, CircleBaseColor::Green, CircleBaseSize::MediumAlt);
+        geodeButtonSprite->setScale(0.6f);
+        auto geodeButton = CCMenuItemSpriteExtra::create(geodeButtonSprite, this, menu_selector(GeodeInPauseMenu::openGeodeMenu));
+        geodeButton->setID("geode-button"_spr);
+        rightButtonMenu->addChild(geodeButton);
+        rightButtonMenu->updateLayout();
     }
 };

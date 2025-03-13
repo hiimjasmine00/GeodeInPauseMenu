@@ -5,7 +5,7 @@ set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(GEODE_DISABLE_PRECOMPILED_HEADERS ON)
 
-project(GeodeInPauseMenu VERSION 1.0.1)
+project(GeodeInPauseMenu VERSION 1.0.2)
 
 add_library(${PROJECT_NAME} SHARED
     src/classes/ModsLayerWrapper.cpp

@@ -31,8 +31,7 @@ bool ModsLayerWrapper::init(CCLayer* modsLayer) {
     modsLayer->removeChildByID("side-art-top-right");
     modsLayer->removeChildByID("side-art-bottom-left");
     modsLayer->removeChildByID("side-art-bottom-right");
-    static_cast<CCMenuItemSpriteExtra*>(
-        modsLayer->getChildByID("back-menu")->getChildByID("back-button"))->setTarget(this, menu_selector(ModsLayerWrapper::onClose));
+    static_cast<CCMenuItem*>(modsLayer->getChildByID("back-menu")->getChildByID("back-button"))->setTarget(this, menu_selector(ModsLayerWrapper::onClose));
 
     setKeyboardEnabled(true);
     handleTouchPriority(this, true);

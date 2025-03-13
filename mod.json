@@ -1,11 +1,11 @@
 {
-    "geode": "4.2.0",
+    "geode": "4.3.1",
     "gd": {
         "android": "2.2074",
         "win": "2.2074",
         "mac": "2.2074"
     },
-    "version": "v1.0.1",
+    "version": "v1.0.2",
     "id": "hiimjustin000.geode_in_pause_menu",
     "name": "Geode In Pause Menu",
     "developer": "hiimjasmine00",
@@ -21,7 +21,7 @@
     "settings": {
         "game-pause-menu": {
             "name": "Game Pause Menu",
-            "description": "Enables the Geode button in the pause menu.",
+            "description": "Enables the Geode button in the game pause menu.",
             "type": "bool",
             "default": true
         },

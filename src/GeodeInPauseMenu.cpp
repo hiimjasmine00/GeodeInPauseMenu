@@ -4,12 +4,13 @@
 
 using namespace geode::prelude;
 
-void GeodeInPauseMenu::openGeodeMenu() {
-    auto director = CCDirector::sharedDirector();
+void GeodeInPauseMenu::openGeodeMenu(CCObject*) {
+    auto director = CCDirector::get();
     auto runningScene = director->getRunningScene();
     runningScene->retain();
     auto dontCallWillSwitch = director->getDontCallWillSwitch();
     director->setDontCallWillSwitch(true);
+
     openModsList();
     CCLayer* modsLayer = nullptr;
     if (auto transitionScene = typeinfo_cast<CCTransitionScene*>(director->m_pNextScene); transitionScene && transitionScene->m_pInScene) {
