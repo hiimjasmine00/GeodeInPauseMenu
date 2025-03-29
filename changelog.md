@@ -1,4 +1,7 @@
 # Geode In Pause Menu Changelog
+## v1.1.0 (2025-03-29)
+- Added the Geode button to the level edit menu and level info menu (Suggested by [HexCodes](user:16858187))
+
 ## v1.0.2 (2025-03-13)
 - Fixed the Geode button scale on the editor pause menu (Reported by [Erymanthus](user:1941705))
 

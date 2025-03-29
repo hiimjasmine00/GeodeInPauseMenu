@@ -6,21 +6,22 @@ using namespace geode::prelude;
 
 class $modify(GIPMEditorPauseLayer, EditorPauseLayer) {
     static void onModify(ModifyBase<ModifyDerive<GIPMEditorPauseLayer, EditorPauseLayer>>& self) {
-        auto hook = self.getHook("EditorPauseLayer::init").mapErr([](const std::string& err) {
+        (void)self.getHook("EditorPauseLayer::init").map([](Hook* hook) {
+            auto mod = Mod::get();
+            hook->setAutoEnable(mod->getSettingValue<bool>("editor-pause-menu"));
+
+            listenForSettingChangesV3<bool>("editor-pause-menu", [hook](bool value) {
+                (void)(value ? hook->enable().mapErr([value](const std::string& err) {
+                    return log::error("Failed to enable EditorPauseLayer::init hook: {}", err), err;
+                }) : hook->disable().mapErr([value](const std::string& err) {
+                    return log::error("Failed to disable EditorPauseLayer::init hook: {}", err), err;
+                }));
+            }, mod);
+
+            return hook;
+        }).mapErr([](const std::string& err) {
             return log::error("Failed to get EditorPauseLayer::init hook: {}", err), err;
-        }).unwrapOr(nullptr);
-        if (!hook) return;
-
-        auto mod = Mod::get();
-        hook->setAutoEnable(mod->getSettingValue<bool>("editor-pause-menu"));
-
-        listenForSettingChangesV3<bool>("editor-pause-menu", [hook](bool value) {
-            (void)(value ? hook->enable().mapErr([value](const std::string& err) {
-                return log::error("Failed to enable EditorPauseLayer::init hook: {}", err), err;
-            }) : hook->disable().mapErr([value](const std::string& err) {
-                return log::error("Failed to disable EditorPauseLayer::init hook: {}", err), err;
-            }));
-        }, mod);
+        });
     }
 
     bool init(LevelEditorLayer* lel) {
