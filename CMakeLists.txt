@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS" OR IOS)
+    set(CMAKE_OSX_ARCHITECTURES "arm64")
+else()
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(GEODE_DISABLE_PRECOMPILED_HEADERS ON)
 
-project(GeodeInPauseMenu VERSION 1.1.0)
+project(GeodeInPauseMenu VERSION 1.1.1)
 
 add_library(${PROJECT_NAME} SHARED
     src/classes/ModsLayerWrapper.cpp

@@ -3,9 +3,10 @@
     "gd": {
         "android": "2.2074",
         "win": "2.2074",
-        "mac": "2.2074"
+        "mac": "2.2074",
+        "ios": "2.2074"
     },
-    "version": "v1.1.0",
+    "version": "v1.1.1",
     "id": "hiimjustin000.geode_in_pause_menu",
     "name": "Geode In Pause Menu",
     "developer": "hiimjasmine00",

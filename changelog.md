@@ -1,4 +1,7 @@
 # Geode In Pause Menu Changelog
+## v1.1.1 (2025-04-08)
+- Added support for iOS
+
 ## v1.1.0 (2025-03-29)
 - Added the Geode button to the level edit menu and level info menu (Suggested by [HexCodes](user:16858187))
 
