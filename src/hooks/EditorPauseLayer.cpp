@@ -5,24 +5,7 @@
 using namespace geode::prelude;
 
 class $modify(GIPMEditorPauseLayer, EditorPauseLayer) {
-    static void onModify(ModifyBase<ModifyDerive<GIPMEditorPauseLayer, EditorPauseLayer>>& self) {
-        (void)self.getHook("EditorPauseLayer::init").map([](Hook* hook) {
-            auto mod = Mod::get();
-            hook->setAutoEnable(mod->getSettingValue<bool>("editor-pause-menu"));
-
-            listenForSettingChangesV3<bool>("editor-pause-menu", [hook](bool value) {
-                (void)(value ? hook->enable().mapErr([value](const std::string& err) {
-                    return log::error("Failed to enable EditorPauseLayer::init hook: {}", err), err;
-                }) : hook->disable().mapErr([value](const std::string& err) {
-                    return log::error("Failed to disable EditorPauseLayer::init hook: {}", err), err;
-                }));
-            }, mod);
-
-            return hook;
-        }).mapErr([](const std::string& err) {
-            return log::error("Failed to get EditorPauseLayer::init hook: {}", err), err;
-        });
-    }
+    GIPM_MODIFY("editor-pause-menu")
 
     bool init(LevelEditorLayer* lel) {
         if (!EditorPauseLayer::init(lel)) return false;

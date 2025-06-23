@@ -9,7 +9,7 @@ endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(GEODE_DISABLE_PRECOMPILED_HEADERS ON)
 
-project(GeodeInPauseMenu VERSION 1.1.1)
+project(GeodeInPauseMenu VERSION 1.1.2)
 
 add_library(${PROJECT_NAME} SHARED
     src/classes/ModsLayerWrapper.cpp

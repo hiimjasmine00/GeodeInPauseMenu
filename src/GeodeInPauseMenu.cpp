@@ -6,30 +6,25 @@ using namespace geode::prelude;
 
 void GeodeInPauseMenu::openGeodeMenu(CCObject*) {
     auto director = CCDirector::get();
-    auto runningScene = director->getRunningScene();
-    runningScene->retain();
+    Ref runningScene = director->getRunningScene();
     auto dontCallWillSwitch = director->getDontCallWillSwitch();
     director->setDontCallWillSwitch(true);
 
     openModsList();
-    CCLayer* modsLayer = nullptr;
-    if (auto transitionScene = typeinfo_cast<CCTransitionScene*>(director->m_pNextScene); transitionScene && transitionScene->m_pInScene) {
-        if (auto children = transitionScene->m_pInScene->getChildren()) modsLayer = static_cast<CCLayer*>(children->objectAtIndex(0));
+    Ref<CCLayer> modsLayer;
+    if (auto transitionScene = typeinfo_cast<CCTransitionScene*>(director->m_pNextScene)) {
+        if (transitionScene->m_pInScene) modsLayer = getChild<CCLayer>(transitionScene->m_pInScene, 0);
     }
 
     director->setDontCallWillSwitch(true);
     director->replaceScene(runningScene);
     director->setDontCallWillSwitch(dontCallWillSwitch);
-    runningScene->release();
     director->m_pNextScene = nullptr;
 
     if (!modsLayer) return;
 
-    modsLayer->retain();
     modsLayer->removeFromParentAndCleanup(false);
-    queueInMainThread([modsLayer] {
-        auto modsLayerWrapper = ModsLayerWrapper::create(modsLayer);
-        modsLayer->release();
-        modsLayerWrapper->show();
+    queueInMainThread([modsLayer = std::move(modsLayer)] {
+        ModsLayerWrapper::create(modsLayer)->show();
     });
 }

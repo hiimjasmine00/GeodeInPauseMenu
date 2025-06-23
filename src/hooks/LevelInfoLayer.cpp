@@ -5,24 +5,7 @@
 using namespace geode::prelude;
 
 class $modify(GIPMLevelInfoLayer, LevelInfoLayer) {
-    static void onModify(ModifyBase<ModifyDerive<GIPMLevelInfoLayer, LevelInfoLayer>>& self) {
-        (void)self.getHook("LevelInfoLayer::init").map([](Hook* hook) {
-            auto mod = Mod::get();
-            hook->setAutoEnable(mod->getSettingValue<bool>("level-info-menu"));
-
-            listenForSettingChangesV3<bool>("level-info-menu", [hook](bool value) {
-                (void)(value ? hook->enable().mapErr([value](const std::string& err) {
-                    return log::error("Failed to enable LevelInfoLayer::init hook: {}", err), err;
-                }) : hook->disable().mapErr([value](const std::string& err) {
-                    return log::error("Failed to disable LevelInfoLayer::init hook: {}", err), err;
-                }));
-            }, mod);
-
-            return hook;
-        }).mapErr([](const std::string& err) {
-            return log::error("Failed to get LevelInfoLayer::init hook: {}", err), err;
-        });
-    }
+    GIPM_MODIFY("level-info-menu")
 
     bool init(GJGameLevel* level, bool challenge) {
         if (!LevelInfoLayer::init(level, challenge)) return false;

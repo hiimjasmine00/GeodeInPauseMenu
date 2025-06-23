@@ -5,24 +5,7 @@
 using namespace geode::prelude;
 
 class $modify(GIPMEditLevelLayer, EditLevelLayer) {
-    static void onModify(ModifyBase<ModifyDerive<GIPMEditLevelLayer, EditLevelLayer>>& self) {
-        (void)self.getHook("EditLevelLayer::init").map([](Hook* hook) {
-            auto mod = Mod::get();
-            hook->setAutoEnable(mod->getSettingValue<bool>("level-edit-menu"));
-
-            listenForSettingChangesV3<bool>("level-edit-menu", [hook](bool value) {
-                (void)(value ? hook->enable().mapErr([value](const std::string& err) {
-                    return log::error("Failed to enable EditLevelLayer::init hook: {}", err), err;
-                }) : hook->disable().mapErr([value](const std::string& err) {
-                    return log::error("Failed to disable EditLevelLayer::init hook: {}", err), err;
-                }));
-            }, mod);
-
-            return hook;
-        }).mapErr([](const std::string& err) {
-            return log::error("Failed to get EditLevelLayer::init hook: {}", err), err;
-        });
-    }
+    GIPM_MODIFY("level-edit-menu")
 
     bool init(GJGameLevel* level) {
         if (!EditLevelLayer::init(level)) return false;

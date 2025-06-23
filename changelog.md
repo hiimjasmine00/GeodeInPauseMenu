@@ -1,4 +1,7 @@
 # Geode In Pause Menu Changelog
+## v1.1.2 (2025-06-23)
+- Ported to Geode v4.6.1
+
 ## v1.1.1 (2025-04-08)
 - Added support for iOS
 
