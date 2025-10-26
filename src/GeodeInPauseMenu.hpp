@@ -1,25 +1,9 @@
-#include <cocos2d.h>
-
-#define GIPM_MODIFY(settingName) \
-    static void onModify(auto& self) { \
-        auto mod = Mod::get(); \
-        auto enabled = mod->getSettingValue<bool>(settingName); \
-        auto& hooks = self.m_hooks; \
-        for (auto& [name, hook] : hooks) { \
-            hook->setAutoEnable(enabled); \
-        } \
-        if (!hooks.empty()) listenForSettingChangesV3<bool>(settingName, [hooks](bool value) { \
-            for (auto& [name, hook] : hooks) { \
-                (void)(value ? hook->enable().inspectErr([&name](const std::string& err) { \
-                    log::error("Failed to enable {} hook: {}", name, err); \
-                }) : hook->disable().inspectErr([&name](const std::string& err) { \
-                    log::error("Failed to disable {} hook: {}", name, err); \
-                })); \
-            } \
-        }, mod); \
-    } \
+#include <Geode/loader/Types.hpp>
+#include <Geode/ui/BasedButtonSprite.hpp>
 
 class GeodeInPauseMenu : public cocos2d::CCObject {
 public:
-    void openGeodeMenu(CCObject*);
+    void openGeodeMenu(cocos2d::CCObject* sender);
+    static void modify(std::map<std::string, std::shared_ptr<geode::Hook>>& hooks, const std::string& name, std::string_view setting);
+    static void addGeodeButton(cocos2d::CCNode* parent, std::string_view id, float scale, float sprScale, geode::CircleBaseSize size);
 };

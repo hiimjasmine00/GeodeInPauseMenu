@@ -31,7 +31,8 @@ bool ModsLayerWrapper::init(CCLayer* modsLayer) {
     modsLayer->removeChildByID("side-art-top-right");
     modsLayer->removeChildByID("side-art-bottom-left");
     modsLayer->removeChildByID("side-art-bottom-right");
-    static_cast<CCMenuItem*>(modsLayer->getChildByID("back-menu")->getChildByID("back-button"))->setTarget(this, menu_selector(ModsLayerWrapper::onClose));
+    static_cast<CCMenuItem*>(modsLayer->getChildByID("back-menu")->getChildByID("back-button"))->setTarget(
+        this, menu_selector(ModsLayerWrapper::onClose));
 
     setKeyboardEnabled(true);
     handleTouchPriority(this, true);
@@ -44,4 +45,16 @@ void ModsLayerWrapper::onClose(CCObject*) {
     setKeyboardEnabled(false);
     setTouchEnabled(false);
     removeFromParent();
+}
+
+void ModsLayerWrapper::keyBackClicked() {
+    onClose(nullptr);
+}
+
+void ModsLayerWrapper::registerWithTouchDispatcher() {
+    CCTouchDispatcher::get()->addTargetedDelegate(this, -500, true);
+}
+
+void ModsLayerWrapper::keyDown(enumKeyCodes key) {
+    m_mainLayer->keyDown(key);
 }

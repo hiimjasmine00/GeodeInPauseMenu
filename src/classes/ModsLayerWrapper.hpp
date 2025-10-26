@@ -2,18 +2,12 @@
 
 class ModsLayerWrapper : public FLAlertLayer {
 protected:
-    bool init(CCLayer*);
+    bool init(cocos2d::CCLayer*);
 public:
-    static ModsLayerWrapper* create(CCLayer*);
+    static ModsLayerWrapper* create(cocos2d::CCLayer*);
 
-    void onClose(CCObject*);
-    void keyBackClicked() override {
-        onClose(nullptr);
-    }
-    void registerWithTouchDispatcher() override {
-        cocos2d::CCTouchDispatcher::get()->addTargetedDelegate(this, -500, true);
-    }
-    void keyDown(cocos2d::enumKeyCodes key) override {
-        m_mainLayer->keyDown(key);
-    }
+    void onClose(cocos2d::CCObject*);
+    void keyBackClicked() override;
+    void registerWithTouchDispatcher() override;
+    void keyDown(cocos2d::enumKeyCodes) override;
 };

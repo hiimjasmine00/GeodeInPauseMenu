@@ -1,25 +1,17 @@
 #include "../GeodeInPauseMenu.hpp"
 #include <Geode/modify/EditorPauseLayer.hpp>
-#include <Geode/ui/BasedButtonSprite.hpp>
 
 using namespace geode::prelude;
 
 class $modify(GIPMEditorPauseLayer, EditorPauseLayer) {
-    GIPM_MODIFY("editor-pause-menu")
+    static void onModify(ModifyBase<ModifyDerive<GIPMEditorPauseLayer, EditorPauseLayer>>& self) {
+        GeodeInPauseMenu::modify(self.m_hooks, "EditorPauseLayer::init", "editor-pause-menu");
+    }
 
     bool init(LevelEditorLayer* lel) {
         if (!EditorPauseLayer::init(lel)) return false;
 
-        auto guidelinesMenu = getChildByID("guidelines-menu");
-        if (!guidelinesMenu) return true;
-
-        auto geodeButton = CCMenuItemSpriteExtra::create(CircleButtonSprite::createWithSpriteFrameName(
-            "geode.loader/geode-logo-outline-gold.png",
-            1.0f, CircleBaseColor::Green, CircleBaseSize::Small
-        ), this, menu_selector(GeodeInPauseMenu::openGeodeMenu));
-        geodeButton->setID("geode-button"_spr);
-        guidelinesMenu->addChild(geodeButton);
-        guidelinesMenu->updateLayout();
+        GeodeInPauseMenu::addGeodeButton(this, "guidelines-menu", 1.0f, 1.0f, CircleBaseSize::Small);
 
         return true;
     }
