@@ -1,11 +1,12 @@
 #include "../GeodeInPauseMenu.hpp"
 #include <Geode/modify/EditLevelLayer.hpp>
+#include <jasmine/hook.hpp>
 
 using namespace geode::prelude;
 
 class $modify(GIPMEditLevelLayer, EditLevelLayer) {
     static void onModify(ModifyBase<ModifyDerive<GIPMEditLevelLayer, EditLevelLayer>>& self) {
-        GeodeInPauseMenu::modify(self.m_hooks, "EditLevelLayer::init", "level-edit-menu");
+        jasmine::hook::modify(self.m_hooks, "EditLevelLayer::init", "level-edit-menu");
     }
 
     bool init(GJGameLevel* level) {

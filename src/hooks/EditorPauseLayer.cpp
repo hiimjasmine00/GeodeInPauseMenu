@@ -1,11 +1,12 @@
 #include "../GeodeInPauseMenu.hpp"
 #include <Geode/modify/EditorPauseLayer.hpp>
+#include <jasmine/hook.hpp>
 
 using namespace geode::prelude;
 
 class $modify(GIPMEditorPauseLayer, EditorPauseLayer) {
     static void onModify(ModifyBase<ModifyDerive<GIPMEditorPauseLayer, EditorPauseLayer>>& self) {
-        GeodeInPauseMenu::modify(self.m_hooks, "EditorPauseLayer::init", "editor-pause-menu");
+        jasmine::hook::modify(self.m_hooks, "EditorPauseLayer::init", "editor-pause-menu");
     }
 
     bool init(LevelEditorLayer* lel) {

@@ -1,11 +1,12 @@
 #include "../GeodeInPauseMenu.hpp"
 #include <Geode/modify/LevelInfoLayer.hpp>
+#include <jasmine/hook.hpp>
 
 using namespace geode::prelude;
 
 class $modify(GIPMLevelInfoLayer, LevelInfoLayer) {
     static void onModify(ModifyBase<ModifyDerive<GIPMLevelInfoLayer, LevelInfoLayer>>& self) {
-        GeodeInPauseMenu::modify(self.m_hooks, "LevelInfoLayer::init", "level-info-menu");
+        jasmine::hook::modify(self.m_hooks, "LevelInfoLayer::init", "level-info-menu");
     }
 
     bool init(GJGameLevel* level, bool challenge) {

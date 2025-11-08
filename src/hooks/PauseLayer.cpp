@@ -1,11 +1,12 @@
 #include "../GeodeInPauseMenu.hpp"
 #include <Geode/modify/PauseLayer.hpp>
+#include <jasmine/hook.hpp>
 
 using namespace geode::prelude;
 
 class $modify(GIPMPauseLayer, PauseLayer) {
     static void onModify(ModifyBase<ModifyDerive<GIPMPauseLayer, PauseLayer>>& self) {
-        GeodeInPauseMenu::modify(self.m_hooks, "PauseLayer::customSetup", "game-pause-menu");
+        jasmine::hook::modify(self.m_hooks, "PauseLayer::customSetup", "game-pause-menu");
     }
 
     void customSetup() override {
