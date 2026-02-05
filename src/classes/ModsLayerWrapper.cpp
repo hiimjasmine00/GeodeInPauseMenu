@@ -55,6 +55,6 @@ void ModsLayerWrapper::registerWithTouchDispatcher() {
     CCTouchDispatcher::get()->addTargetedDelegate(this, -500, true);
 }
 
-void ModsLayerWrapper::keyDown(enumKeyCodes key) {
-    m_mainLayer->keyDown(key);
+void ModsLayerWrapper::keyDown(enumKeyCodes key, double timestamp) {
+    m_mainLayer->keyDown(key, timestamp);
 }

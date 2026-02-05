@@ -4,7 +4,12 @@
 
 using namespace geode::prelude;
 
-void GeodeInPauseMenu::openGeodeMenu(CCObject* sender) {
+class GIPMHandler : public CCObject {
+public:
+    void openGeodeMenu(CCObject* sender);
+};
+
+void GIPMHandler::openGeodeMenu(CCObject* sender) {
     auto director = CCDirector::get();
     Ref runningScene = director->getRunningScene();
     auto dontCallWillSwitch = director->getDontCallWillSwitch();
@@ -39,7 +44,7 @@ void GeodeInPauseMenu::addGeodeButton(CCNode* parent, std::string_view id, float
         "geode.loader/geode-logo-outline-gold.png", sprScale, CircleBaseColor::Green, size
     );
     geodeButtonSprite->setScale(scale);
-    auto geodeButton = CCMenuItemSpriteExtra::create(geodeButtonSprite, parent, menu_selector(GeodeInPauseMenu::openGeodeMenu));
+    auto geodeButton = CCMenuItemSpriteExtra::create(geodeButtonSprite, parent, menu_selector(GIPMHandler::openGeodeMenu));
     geodeButton->setID("geode-button"_spr);
     menu->addChild(geodeButton);
     menu->updateLayout();

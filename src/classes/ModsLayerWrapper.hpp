@@ -9,5 +9,5 @@ public:
     void onClose(cocos2d::CCObject*);
     void keyBackClicked() override;
     void registerWithTouchDispatcher() override;
-    void keyDown(cocos2d::enumKeyCodes) override;
+    void keyDown(cocos2d::enumKeyCodes, double) override;
 };
