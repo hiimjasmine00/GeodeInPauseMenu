@@ -1,12 +1,12 @@
 {
-    "geode": "5.0.0-alpha.2",
+    "geode": "5.0.0-beta.1",
     "gd": {
         "android": "2.2081",
         "win": "2.2081",
         "mac": "2.2081",
         "ios": "2.2081"
     },
-    "version": "v1.1.3-beta.1",
+    "version": "v1.1.3",
     "id": "hiimjustin000.geode_in_pause_menu",
     "name": "Geode In Pause Menu",
     "developer": "hiimjasmine00",

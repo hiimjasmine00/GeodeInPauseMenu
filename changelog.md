@@ -1,5 +1,5 @@
 # Geode In Pause Menu Changelog
-## v1.1.3 (2026-02-10)
+## v1.1.3 (2026-02-14)
 - Ported to Geometry Dash v2.208 / Geode SDK v5.0.0
 
 ## v1.1.2 (2025-06-23)
